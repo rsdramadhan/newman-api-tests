@@ -1,0 +1,35 @@
+name: Qase Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  qase_test_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Newman tests
+        run: |
+          npm install -g newman
+          newman run ReqresAPI.postman_collection.json -e Production.postman_environment.json --disable-unicode \
+            --reporters cli,junit --reporter-junit-export=result.xml
+
+      - name: Upload test results to Qase
+        uses: qaseio/action-upload-test-results@v1
+        with:
+          format: junit
+          result-file: result.xml
+          api-token: ${{ secrets.cdf3bcec02347a95bb451b9d21a03151bbf192ad812583f84b0e46df2bf61ac4}}
