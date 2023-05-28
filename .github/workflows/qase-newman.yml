@@ -1,0 +1,28 @@
+name: Qase + Newman Integration
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      
+      - name: Install dependencies
+        run: npm install -g newman@5 qase-cli@1
+      
+      - name: Run Newman tests
+        run: newman run ReqresAPI.postman_collection.json --environment Production.postman_environment.json --reporters cli,junit --reporter-junit-export newman-results.xml
+        
+      - name: Upload test results to Qase
+        run: qase run add --project-code NAT --test-run-id 11 --format junit --file newman-results.xml
