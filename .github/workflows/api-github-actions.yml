@@ -27,5 +27,4 @@ jobs:
         run: "npm install -g newman-reporter-qase"
       - 
         name: "Run tests"
-        run: "newman run ReqresAPI.postman_collection.json -e Production.postman_environment.json 
-        --reporters qase --reporter-qase-api-token 3721c947433acda29ef681359fee5d29091ede66a6b5c5a56875425bcfaf9095"
+        run: "newman run ReqresAPI.postman_collection.json -e Production.postman_environment.json"
