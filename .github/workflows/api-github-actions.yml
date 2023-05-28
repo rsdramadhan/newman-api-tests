@@ -32,11 +32,13 @@ jobs:
         name: "Run tests"
         run: "newman run ReqresAPI.postman_collection.json -e Production.postman_environment.json -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html --reporter-htmlextra-darkTheme  > testResults/runreport1.html"
       
-      - name: Output summary to console
+      - 
+        name: Output summary to console
         run: echo ${{ steps.run-newman.outputs.summary }}
 
-      - name: Output the run Details
+      - 
+        name: Output the run Details
         uses: actions/upload-artifact@v2
         with: 
-        name: API Test Reports
-        path: testResults
+          name: API Test Reports
+          path: testResults
