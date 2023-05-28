@@ -1,25 +1,28 @@
-name: API Tests
+name: CI/CD with Newman and Qase
 
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  api-tests:
+on: 
+  workflow_dispatch:
+jobs: 
+  test: 
+    defaults: 
+      run: 
+        working-directory: ./tests
+    environment: staging
+    name: "Run tests"
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    steps: 
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
+    - name: Install Newman
+      run: npm install -g newman
 
-      - name: Install dependencies
-        run: npm install -g newman qaseio-reporter
+    - name: "Run tests"
+      run: "newman run ReqresAPI.postman_collection.json -e Production.postman_environment.json"
 
-      - name: Run API tests
-        run: newman run newman run ReqresAPI.postman_collection.json -e Production.postman_environment.json --reporters cli,qaseio --reporter-qaseio-apikey ${{ secrets.QASE_API_KEY }} --reporter-qaseio-project ${{ secrets.QASE_PROJECT_CODE }} --reporter-qaseio-suite ${{ secrets.QASE_SUITE_CODE }}
+    - name: Install Qase CLI
+      run: npm install -g qase-cli
+
+    - name: Upload test results to Qase
+      run: qase run create --api-token ${{ secrets.QASE_API_TOKEN }} --project-code YOUR_PROJECT_CODE --suite-id YOUR_SUITE_ID --title "Test Run" --results-file test-results.xml
