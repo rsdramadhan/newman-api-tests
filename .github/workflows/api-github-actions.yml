@@ -24,7 +24,7 @@ jobs:
         run: "npm install -g newman-reporter-htmlextra"
       - 
         name: "Qase TMS Newman reporter"
-        run: "npm install newman-reporter-qase"
+        run: "npm install -g newman-reporter-qase"
       - 
         name: "Run tests"
         run: "newman run ReqresAPI.postman_collection.json -e Production.postman_environment.json 
