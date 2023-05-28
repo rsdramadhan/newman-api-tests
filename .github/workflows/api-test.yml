@@ -22,4 +22,4 @@ jobs:
         run: npm install -g newman qaseio-reporter
 
       - name: Run API tests
-        run: newman run newman run ReqresAPI.postman_collection.json -e Production.postman_environment.json --reporters cli,qaseio --reporter-qaseio-apikey ${{ secrets.9473fd68361205e8ca92c24474a8fb278f3e3d361a1800a1a9cef0dfc67252f8 }} --reporter-qaseio-project ${{ secrets.NAT }} --reporter-qaseio-suite ${{ secrets.1 }}
+        run: newman run newman run ReqresAPI.postman_collection.json -e Production.postman_environment.json --reporters cli,qaseio --reporter-qaseio-apikey ${{ secrets.QASE_API_KEY }} --reporter-qaseio-project ${{ secrets.QASE_PROJECT_CODE }} --reporter-qaseio-suite ${{ secrets.QASE_SUITE_CODE }}
