@@ -1,21 +1,21 @@
 name:   CI/CD Test-Build
-on:
-  push:
-    branches:
-      - main
-      
+oon: 
   workflow_dispatch:
-        
-jobs:
-  test-api:
+jobs: 
+  test: 
+    defaults: 
+      run: 
+        working-directory: ./tests
+    environment: staging
+    name: "Run tests"
     runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-      
-    - name: Install Node
-      uses: actions/setup-node@v1
-      with: 
-        node-version: '10.x'
+    steps: 
+      - 
+        uses: actions/checkout@v2
+      - 
+        uses: actions/setup-node@v2
+        with: 
+          node-version: "18"
     
     - name: Install newman
       run: |
