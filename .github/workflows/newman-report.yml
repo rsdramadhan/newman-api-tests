@@ -1,5 +1,6 @@
 name:   CI/CD Test-Build
-oon: 
+
+on: 
   workflow_dispatch:
 jobs: 
   test: 
